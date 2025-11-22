@@ -144,6 +144,14 @@ body {
   color: #a0a4d2;
 }
 
+.viz-img {
+  width: 100%;
+  border-radius: 0.7rem;
+  margin-top: 0.6rem;
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 /* References */
 .references-list {
   padding-left: 1.1rem;
