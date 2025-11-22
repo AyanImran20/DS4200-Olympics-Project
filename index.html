@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Visual Analysis of Olympic Games History and Athlete Performance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Link to CSS -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Top Navigation -->
+  <header class="site-header">
+    <div class="logo">
+      <span class="logo-accent">Olympics</span> Insights
+    </div>
+    <nav class="nav">
+      <a href="#intro">Introduction</a>
+      <a href="#data">Data</a>
+      <a href="#static-viz">Static Visualizations</a>
+      <a href="#interactive-viz">Interactive Dashboard</a>
+      <a href="#findings">Findings</a>
+      <a href="#references">References</a>
+    </nav>
+  </header>
+
+  <!-- Main content wrapper -->
+  <main class="content">
+
+    <!-- Intro / Topic & Tasks -->
+    <section id="intro" class="section">
+      <h1>Visual Analysis of Olympic Games History and Athlete Performance</h1>
+      <p class="section-subtitle">
+        An interactive exploration of Summer Olympic medal history, country performance,
+        and gender participation trends from 1896 to the present.
+      </p>
+
+      <div class="card-grid">
+        <article class="card">
+          <h2>Project Goal</h2>
+          <p>
+            Analyze the history of the Summer Olympic Games using data visualization
+            to reveal patterns in medal counts, athlete demographics, and country-level
+            performance across time.
+          </p>
+        </article>
+
+        <article class="card">
+          <h2>Key Questions</h2>
+          <ul>
+            <li>How have medal counts evolved for top countries over time?</li>
+            <li>How has gender participation changed across Olympic years?</li>
+            <li>Which sports and events dominate medal achievements?</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>Team Members & Roles</h2>
+          <ul>
+            <li><strong>Harshini</strong> – Data preprocessing & exploratory analysis</li>
+            <li><strong>Mihir</strong> – Static visualizations (charts, maps, heatmaps)</li>
+            <li><strong>Ayan</strong> – Interactive dashboard & website integration</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Data description -->
+    <section id="data" class="section">
+      <h2>Data Description</h2>
+      <p>
+        Our primary dataset is <code>summer.csv</code> from the
+        <em>visualization-of-olympic-dataset</em> repository. Each row represents
+        a medal-winning athlete in the Summer Olympics, with attributes such as
+        year, city, sport, event, country (NOC), athlete name, and medal type.
+      </p>
+      <p>
+        We will integrate this file with <code>Dictionary.csv</code> (country metadata,
+        GDP per capita, population) and <code>ISO_Codes.csv</code> (standardized
+        country codes) to create a combined <strong>OLYMPICS Dataset</strong> that
+        connects athlete performance to country-level characteristics.
+      </p>
+
+      <div class="data-stats card">
+        <h3>Planned Data Properties</h3>
+        <ul>
+          <li>&gt; 35,000 medal records (observations)</li>
+          <li>&gt; 10 features after merging and feature engineering</li>
+          <li>Mix of categorical variables (sport, event, country, medal)</li>
+          <li>Continuous variables (year, GDP per capita, population)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Static visualizations placeholder -->
+    <section id="static-viz" class="section">
+      <h2>Static Visualizations</h2>
+      <p>
+        This section will present static charts created in Python (Altair/Matplotlib)
+        to provide an overview of Olympic medal trends.
+      </p>
+
+      <div class="viz-grid">
+        <article class="viz-card">
+          <h3>Medal Counts by Country Over Time</h3>
+          <p class="viz-desc">
+            Line or area chart showing how total medal counts for top countries
+            change across Olympic years.
+          </p>
+          <div class="viz-placeholder">
+            <!-- Later: insert <img src="figures/medals_by_country.png" /> -->
+            <span>Static Plot Placeholder</span>
+          </div>
+        </article>
+
+        <article class="viz-card">
+          <h3>Gender Participation by Year</h3>
+          <p class="viz-desc">
+            Stacked bar chart summarizing male vs female athlete counts over time.
+          </p>
+          <div class="viz-placeholder">
+            <span>Static Plot Placeholder</span>
+          </div>
+        </article>
+
+        <article class="viz-card">
+          <h3>Sport / Event Medal Distribution</h3>
+          <p class="viz-desc">
+            Heatmap highlighting which sports and events accumulate the most medals.
+          </p>
+          <div class="viz-placeholder">
+            <span>Static Plot Placeholder</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Interactive visualizations placeholder -->
+    <section id="interactive-viz" class="section">
+      <h2>Interactive Dashboard</h2>
+      <p>
+        This section will host interactive visualizations built with D3 and Altair
+        (via embedded HTML). Users will be able to filter by year, country, gender,
+        and sport to explore medal patterns.
+      </p>
+
+      <div class="viz-grid">
+        <article class="viz-card">
+          <h3>World Medal Map</h3>
+          <p class="viz-desc">
+            Interactive choropleth map showing medal totals by country. Hover to see
+            detailed counts; click to filter trends over time.
+          </p>
+          <div id="world-map" class="viz-placeholder">
+            <!-- D3 world map will be injected here by script.js -->
+            <span>D3 Map Placeholder</span>
+          </div>
+        </article>
+
+        <article class="viz-card">
+          <h3>Top Countries Over Time</h3>
+          <p class="viz-desc">
+            Animated or interactive bar chart race showing the top medal-winning
+            countries for each Olympic Games year.
+          </p>
+          <div id="bar-race" class="viz-placeholder">
+            <!-- D3 / Altair embed placeholder -->
+            <span>Interactive Chart Placeholder</span>
+          </div>
+        </article>
+
+        <article class="viz-card">
+          <h3>Gender Participation Explorer</h3>
+          <p class="viz-desc">
+            Dashboard with controls to select a country and see gender participation
+            and medal breakdown over time.
+          </p>
+          <div id="gender-dashboard" class="viz-placeholder">
+            <!-- Future interactive dashboard -->
+            <span>Interactive Dashboard Placeholder</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Findings / Conclusion -->
+    <section id="findings" class="section">
+      <h2>Preliminary Findings & Future Work</h2>
+      <p>
+        As we complete the analysis, this section will summarize our key insights:
+        shifts in global dominance, changes in gender representation, and how
+        socio-economic factors may correlate with Olympic success.
+      </p>
+      <ul>
+        <li>Highlight 2–3 major trends from the visualizations.</li>
+        <li>Discuss limitations of the dataset and analysis.</li>
+        <li>Suggest future directions (e.g., including Winter Olympics, more demographics).</li>
+      </ul>
+    </section>
+
+    <!-- References -->
+    <section id="references" class="section">
+      <h2>References</h2>
+      <ul class="references-list">
+        <li>
+          Paper 1 (Olympic data / sports analytics – from your proposal).
+        </li>
+        <li>
+          Paper 2 (Visualization / storytelling – from your proposal).
+        </li>
+        <li>
+          Additional blogs or documentation used for D3, Altair, and dataset sources.
+        </li>
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>DS4200 – Olympic Games Visualization Project &copy; 2024</p>
+  </footer>
+
+  <!-- JS -->
+  <script src="script.js"></script>
+</body>
+</html>
