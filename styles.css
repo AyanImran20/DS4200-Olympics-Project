@@ -135,15 +135,11 @@ body {
 
 /* Placeholder box (kept for interactive section only) */
 .viz-placeholder {
-  margin-top: 0.5rem;
-  border-radius: 0.7rem;
-  border: 1px dashed rgba(255, 255, 255, 0.4);
-  min-height: 180px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.85rem;
-  color: #a0a4d2;
+    height: 420px;    /* was ~260px */
+    width: 100%;
+    border: 1px dashed rgba(255,255,255,0.2);
+    border-radius: 12px;
+    margin-top: 0.75rem;
 }
 
 /* Static plot images */
