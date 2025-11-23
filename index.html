@@ -143,53 +143,57 @@
     </section>
 
     <!-- Interactive visualizations -->
-    <section id="interactive-viz" class="section">
-      <h2>Interactive Dashboard</h2>
-      <p>
-        This section will host interactive visualizations built with D3 and Altair
-        (via embedded HTML). Users will be able to filter by year, country, gender,
-        and sport to explore medal patterns.
+<section id="interactive-viz" class="section">
+  <h2>Interactive Dashboard</h2>
+
+  <!-- NEW: dashboard controls -->
+  <div id="dashboard-controls" class="controls">
+    <h3>Select a Country</h3>
+    <select id="country-dropdown"></select>
+  </div>
+
+  <p>
+    This section will host interactive visualizations built with D3 and Altair
+    (via embedded HTML). Users will be able to filter by year, country, gender,
+    and sport to explore medal patterns.
+  </p>
+
+  <div class="viz-grid">
+    <article class="viz-card">
+      <h3>World Medal Map</h3>
+      <p class="viz-desc">
+        Interactive choropleth map showing medal totals by country. Hover to see
+        detailed counts; click to filter trends over time.
       </p>
-
-      <div class="viz-grid">
-        <article class="viz-card">
-          <h3>World Medal Map</h3>
-          <p class="viz-desc">
-            Interactive choropleth map showing medal totals by country. Hover to see
-            detailed counts; click to filter trends over time.
-          </p>
-          <div id="world-map" class="viz-placeholder">
-            <!-- D3 world map will be injected here by script.js -->
-            <span>D3 Map Placeholder</span>
-          </div>
-        </article>
-
-        <article class="viz-card">
-          <h3>Top Countries Over Time</h3>
-          <p class="viz-desc">
-            Animated or interactive bar chart race showing the top medal-winning
-            countries for each Olympic Games year.
-          </p>
-          <div id="bar-race" class="viz-placeholder">
-            <!-- D3 / Altair embed placeholder -->
-            <span>Interactive Chart Placeholder</span>
-          </div>
-        </article>
-
-        <article class="viz-card">
-          <h3>Gender Participation Explorer</h3>
-          <p class="viz-desc">
-            Dashboard with controls to select a country and see gender participation
-            and medal breakdown over time.
-          </p>
-          <div id="gender-dashboard" class="viz-placeholder">
-            <!-- Future interactive dashboard -->
-            <span>Interactive Dashboard Placeholder</span>
-          </div>
-        </article>
+      <div id="world-map" class="viz-placeholder">
+        <span>D3 Map Placeholder</span>
       </div>
-    </section>
+    </article>
 
+    <article class="viz-card">
+      <h3>Top Countries Over Time</h3>
+      <p class="viz-desc">
+        Animated or interactive bar chart race showing the top medal-winning
+        countries for each Olympic Games year.
+      </p>
+      <div id="bar-race" class="viz-placeholder">
+        <span>Interactive Chart Placeholder</span>
+      </div>
+    </article>
+
+    <article class="viz-card">
+      <h3>Gender Participation Explorer</h3>
+      <p class="viz-desc">
+        Dashboard with controls to select a country and see gender participation
+        and medal breakdown over time.
+      </p>
+      <div id="gender-dashboard" class="viz-placeholder">
+        <span>Interactive Dashboard Placeholder</span>
+      </div>
+    </article>
+  </div>
+</section>
+    
     <!-- Findings / Conclusion -->
     <section id="findings" class="section">
       <h2>Preliminary Findings &amp; Future Work</h2>
@@ -222,7 +226,9 @@
     <p>DS4200 – Olympic Games Visualization Project &copy; 2025</p>
   </footer>
 
-  <!-- JS -->
+    <!-- JS -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
+
