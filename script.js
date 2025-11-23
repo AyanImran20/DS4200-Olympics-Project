@@ -145,15 +145,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // ---- 7. Main update function (map + bars + gender) -----------------
       function updateAll() {
-        const filtered = computeFilteredData();
+  const filtered = computeFilteredData();
 
-        // --- map aggregation: medals per ISO code (or NOC / Country fallback)
-        const medalsByIso = d3.rollup(
-          filtered,
-          v => v.length,
-          d => d.ISO_Code || d.NOC || d.Country
-        );
+  // If there is no data for the selected year, show a "no data" state
+  if (!filtered.length) {
+    // Reset map colors
+    mapG.selectAll("path.country")
+      .transition()
+      .duration(300)
+      .attr("fill", "#050814");
 
+    // Clear bar chart
+    barG.selectAll("rect.bar").remove();
+    barG.selectAll("text.bar-label").remove();
+    xAxisG.call(d3.axisBottom(xScale).ticks(0));
+    yAxisG.call(d3.axisLeft(yScale).tickValues([]));
+
+    // Gender summary message
+    genderSummary.text(
+      currentYear === "All"
+        ? "No data available in this dataset for the selected range."
+        : `Year ${currentYear}: no data available in this dataset.`
+    );
+
+    return; // stop here for this year
+  }
+
+  // --- map aggregation: medals per ISO code (or NOC / Country fallback)
+  const medalsByIso = d3.rollup(
+    filtered,
+    v => v.length,
+    d => d.ISO_Code || d.NOC || d.Country
+  );
+  
         const maxMedals =
           d3.max(Array.from(medalsByIso.values())) || 0;
 
