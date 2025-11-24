@@ -12,74 +12,64 @@ document.addEventListener("DOMContentLoaded", () => {
   Promise.all([
     d3.csv("data/olympics_clean.csv"),
     d3.json("data/world.geojson"),
-    d3.csv("data/ISO_Codes.csv")
+    d3.csv("data/ISO_Codes.csv") // NEW: for NOC -> ISO3 mapping
   ])
     .then(([data, world, isoTable]) => {
-      // --------------------------------------------------------------
-      // 0. Build Country -> ISO numeric lookup from ISO_Codes.csv
-      // --------------------------------------------------------------
-      const countryToIsoId = new Map();
-
+      // ------------------------------------------------------------
+      // 0. Build NOC -> ISO3 lookup from ISO_Codes.csv
+      // (If your column names differ, adjust the field names below.)
+      // ------------------------------------------------------------
+      const nocToIso = new Map();
       isoTable.forEach(row => {
-        const name = (row.country || "").trim();
-        const isoNumRaw = row.iso;
-        const isoNum = isoNumRaw !== undefined ? +isoNumRaw : NaN;
-
-        if (!name || Number.isNaN(isoNum)) return;
-
-        // Store ISO numeric as STRING because world.geojson ids are like "36", "840"
-        countryToIsoId.set(name, String(isoNum));
-      });
-
-      console.log("Sample ISO lookup entries:",
-        Array.from(countryToIsoId.entries()).slice(0, 10)
-      );
-
-      // --------------------------------------------------------------
-      // 1. Clean / parse olympics data and attach isoId
-      // --------------------------------------------------------------
-      const missingIsoCountries = new Set();
-
-      data.forEach(d => {
-        d.Year = +d.Year;
-        if (d.Population) d.Population = +d.Population;
-        if (d["GDP per Capita"]) d["GDP per Capita"] = +d["GDP per Capita"];
-
-        const countryName = (d.Country || d.country || "").trim();
-        d.countryName = countryName;
-
-        const isoId = countryToIsoId.get(countryName);
-        if (!isoId) {
-          missingIsoCountries.add(countryName);
-          d.isoId = null;
-        } else {
-          d.isoId = isoId; // string like "36", "840"
+        const noc =
+          (row.NOC || row.noc || row.NOC_Code || "").trim();
+        const iso3 =
+          (row.ISO3 || row.iso3 || row.ISO || "").trim();
+        if (noc && iso3) {
+          nocToIso.set(noc, iso3);
         }
       });
 
+      // ------------------------------------------------------------
+      // 1. Clean / parse olympics data + attach iso3 code per row
+      // ------------------------------------------------------------
+      data.forEach(d => {
+        // numeric fields
+        d.Year = +d.Year;
+        if (d.Population) d.Population = +d.Population;
+        if (d["GDP per Capita"]) {
+          d["GDP per Capita"] = +d["GDP per Capita"];
+        }
+
+        // figure out ISO3 code for this row
+        const noc = (d.NOC || d.noc || d.Team || "").trim();
+        let iso =
+          (d.ISO_Code || d.ISO3 || d.iso3 || "").trim();
+
+        // if olympics_clean.csv doesn't already have ISO codes,
+        // look them up via NOC.
+        if (!iso && noc && nocToIso.has(noc)) {
+          iso = nocToIso.get(noc);
+        }
+
+        d.iso3 = iso || null;
+      });
+
       console.log("Loaded olympics_clean.csv rows:", data.length);
-      console.log("Sample olympics row:", data[0]);
+      console.log("First few rows:", data.slice(0, 5));
       console.log(
-        "Countries with no ISO match (first 15):",
-        Array.from(missingIsoCountries).slice(0, 15)
+        "World features:",
+        world.features ? world.features.length : "no features"
       );
 
-      // --------------------------------------------------------------
-      // 2. Basic year handling / controls
-      // --------------------------------------------------------------
-      const years = Array.from(new Set(data.map(d => d.Year))).sort(
-        (a, b) => a - b
-      );
+      const years = Array.from(
+        new Set(data.map(d => d.Year))
+      ).sort((a, b) => a - b);
       let currentYear = years[years.length - 1]; // latest year
 
-      function computeFilteredData() {
-        if (currentYear === "All") return data;
-        return data.filter(d => d.Year === currentYear);
-      }
-
-      // --------------------------------------------------------------
-      // 3. Map container + controls
-      // --------------------------------------------------------------
+      // ------------------------------------------------------------
+      // 2. Controls (Year dropdown) – inside the map card
+      // ------------------------------------------------------------
       const mapContainer = d3.select("#world-map");
 
       const controls = mapContainer
@@ -87,8 +77,8 @@ document.addEventListener("DOMContentLoaded", () => {
         .attr("class", "viz-controls");
 
       controls
-        .append("label")
-        .attr("for", "year-select")
+        .append("span")
+        .attr("class", "viz-label")
         .text("Year:");
 
       const yearSelect = controls
@@ -109,43 +99,30 @@ document.addEventListener("DOMContentLoaded", () => {
         .property("selected", d => d === currentYear)
         .text(d => (d === "All" ? "All years" : d));
 
-      // --------------------------------------------------------------
-      // 4. World map SVG + projection
-      // --------------------------------------------------------------
+      // ------------------------------------------------------------
+      // 3. World map setup
+      // ------------------------------------------------------------
       const mapWidth = 750;
       const mapHeight = 380;
 
       const svgMap = mapContainer
         .append("svg")
         .attr("viewBox", `0 0 ${mapWidth} ${mapHeight}`)
-        .classed("world-map-svg", true);
+        .style("width", "100%")
+        .style("height", "100%");
 
       const projection = d3
         .geoNaturalEarth1()
-        .fitSize([mapWidth * 0.8, mapHeight * 0.7], world);
+        .fitSize([mapWidth, mapHeight], world);
 
       const path = d3.geoPath(projection);
 
       const countries = world.features || world.geometries || [];
-      console.log(
-        "World features count:",
-        countries.length,
-        "Sample feature:",
-        countries[0] && {
-          id: countries[0].id,
-          name:
-            countries[0].properties &&
-            (countries[0].properties.name ||
-              countries[0].properties.ADMIN ||
-              countries[0].properties.country)
-        }
-      );
-
       const mapG = svgMap.append("g");
 
-      // --------------------------------------------------------------
-      // 5. Bar chart setup ("Top Countries Over Time")
-      // --------------------------------------------------------------
+      // ------------------------------------------------------------
+      // 4. Bar chart ("Top Countries Over Time")
+      // ------------------------------------------------------------
       const barContainer = d3.select("#bar-race");
       const barWidth = 750;
       const barHeight = 380;
@@ -153,11 +130,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const svgBar = barContainer
         .append("svg")
         .attr("viewBox", `0 0 ${barWidth} ${barHeight}`)
-        .classed("bar-chart-svg", true);
+        .style("width", "100%")
+        .style("height", "100%");
 
-      const barMargin = { top: 40, right: 40, bottom: 50, left: 150 };
-      const barInnerWidth = barWidth - barMargin.left - barMargin.right;
-      const barInnerHeight = barHeight - barMargin.top - barMargin.bottom;
+      const barMargin = { top: 30, right: 30, bottom: 40, left: 140 };
+      const barInnerWidth =
+        barWidth - barMargin.left - barMargin.right;
+      const barInnerHeight =
+        barHeight - barMargin.top - barMargin.bottom;
 
       const barG = svgBar
         .append("g")
@@ -166,11 +146,14 @@ document.addEventListener("DOMContentLoaded", () => {
           `translate(${barMargin.left},${barMargin.top})`
         );
 
-      const xScale = d3.scaleLinear().range([0, barInnerWidth]);
+      const xScale = d3
+        .scaleLinear()
+        .range([0, barInnerWidth]);
+
       const yScale = d3
         .scaleBand()
         .range([0, barInnerHeight])
-        .padding(0.2);
+        .padding(0.15);
 
       const xAxisG = barG
         .append("g")
@@ -182,87 +165,127 @@ document.addEventListener("DOMContentLoaded", () => {
       svgBar
         .append("text")
         .attr("x", barWidth / 2)
-        .attr("y", 24)
+        .attr("y", 18)
         .attr("text-anchor", "middle")
-        .attr("class", "viz-title-small")
+        .attr("fill", "#f9fafb")
+        .attr("font-size", "14px")
         .text("Top Countries by Medal Count");
 
-      // --------------------------------------------------------------
-      // 6. Gender summary block
-      // --------------------------------------------------------------
+      // ------------------------------------------------------------
+      // 5. Gender summary block
+      // ------------------------------------------------------------
       const genderContainer = d3.select("#gender-dashboard");
       const genderSummary = genderContainer
         .append("div")
-        .attr("class", "gender-summary");
+        .attr("class", "gender-summary")
+        .style("font-size", "0.9rem")
+        .style("color", "#e5e7eb")
+        .style("margin-top", "0.75rem");
 
-      // --------------------------------------------------------------
+      // ------------------------------------------------------------
+      // 6. Helper to get filtered data
+      // ------------------------------------------------------------
+      function computeFilteredData() {
+        if (currentYear === "All") return data;
+        return data.filter(d => d.Year === currentYear);
+      }
+
+      // ------------------------------------------------------------
       // 7. Main update function (map + bars + gender)
-      // --------------------------------------------------------------
+      // ------------------------------------------------------------
       function updateAll() {
         const filtered = computeFilteredData();
 
-        // Filter to rows that have an isoId we can join on
-        const filteredWithIso = filtered.filter(d => d.isoId);
+        // If there is no data for the selected year, show a "no data" state.
+        if (!filtered.length) {
+          mapG
+            .selectAll("path.country")
+            .transition()
+            .duration(300)
+            .attr("fill", "#050814");
 
-        // ----- 7a. Build medalsById: isoId -> count ------------------
-        const medalsById = d3.rollup(
-          filteredWithIso,
+          barG.selectAll("rect.bar").remove();
+          barG.selectAll("text.bar-label").remove();
+          xAxisG.call(d3.axisBottom(xScale).ticks(0));
+          yAxisG.call(d3.axisLeft(yScale).tickValues([]));
+
+          genderSummary.text(
+            currentYear === "All"
+              ? "No data available in this dataset for the selected range."
+              : `Year ${currentYear}: no data available in this dataset.`
+          );
+
+          return; // stop here for this year
+        }
+
+        // --------------------------------------------------------
+        // Map aggregation: medals per ISO3 code
+        // --------------------------------------------------------
+        const medalsByIso = d3.rollup(
+          filtered,
           v => v.length,
-          d => d.isoId
+          d => d.iso3 // <-- we now aggregate by the cleaned ISO3 code
         );
 
-        const maxMedals = d3.max(medalsById.values()) || 0;
+        const maxMedals =
+          d3.max(Array.from(medalsByIso.values())) || 0;
 
-        const color =
-          maxMedals > 0
-            ? d3
-                .scaleLinear()
-                .domain([0, maxMedals])
-                .range(["#e5f0ff", "#2563eb"])
-            : () => "#e5f0ff";
+        const color = d3
+          .scaleLinear()
+          .domain([0, maxMedals || 1])
+          .range(["#e5f0ff", "#1d4ed8"]);
 
-        // ----- 7b. Draw / update world map ---------------------------
         const countryPaths = mapG
           .selectAll("path.country")
-          .data(countries, d => d.id);
+          .data(
+            countries,
+            d =>
+              d.properties &&
+              (d.properties.ISO_A3 || d.id || d.properties.name)
+          );
 
-        const countryEnter = countryPaths
+        countryPaths
           .enter()
           .append("path")
           .attr("class", "country")
           .attr("d", path)
-          .attr("stroke", "#b0c4de")
+          .attr("stroke", "#94a3b8")
           .attr("stroke-width", 0.6)
           .on("mouseover", function () {
             d3.select(this)
-              .attr("stroke", "#f97316")
-              .attr("stroke-width", 1.1);
+              .attr("stroke", "#facc15")
+              .attr("stroke-width", 1.4);
           })
           .on("mouseout", function () {
             d3.select(this)
-              .attr("stroke", "#b0c4de")
+              .attr("stroke", "#94a3b8")
               .attr("stroke-width", 0.6);
-          });
-
-        countryEnter
+          })
           .merge(countryPaths)
           .transition()
           .duration(600)
           .attr("fill", d => {
-            // world.geojson id is numeric string like "36", "840"
-            const key = String(d.id);
-            const val = medalsById.get(key) || 0;
-            return color(val);
+            const iso =
+              (d.properties &&
+                (d.properties.ISO_A3 ||
+                  d.id ||
+                  d.properties.name)) ||
+              "";
+            const val = medalsByIso.get(iso) || 0;
+            // light grey for zero medals
+            return val ? color(val) : "#e5e7eb";
           });
 
         countryPaths.exit().remove();
 
-        // ----- 7c. Bar chart: top 10 countries -----------------------
+        // --------------------------------------------------------
+        // Bar chart: top 10 countries for this year
+        // --------------------------------------------------------
         const medalsByCountry = d3
           .rollups(
             filtered,
             v => v.length,
-            d => d.countryName || d.Country
+            d => d.Country_Name || d.Country
           )
           .sort((a, b) => d3.descending(a[1], b[1]))
           .slice(0, 10);
@@ -285,6 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .attr("y", d => yScale(d[0]))
           .attr("height", yScale.bandwidth())
           .attr("width", 0)
+          .attr("fill", "#38bdf8")
           .transition()
           .duration(600)
           .attr("width", d => xScale(d[1]));
@@ -306,7 +330,7 @@ document.addEventListener("DOMContentLoaded", () => {
           .enter()
           .append("text")
           .attr("class", "bar-label")
-          .attr("x", d => xScale(d[1]) + 6)
+          .attr("x", d => xScale(d[1]) + 4)
           .attr(
             "y",
             d =>
@@ -314,11 +338,13 @@ document.addEventListener("DOMContentLoaded", () => {
               yScale.bandwidth() / 2 +
               4
           )
+          .attr("fill", "#e5e7eb")
+          .attr("font-size", "10px")
           .text(d => d[1])
           .merge(labels)
           .transition()
           .duration(600)
-          .attr("x", d => xScale(d[1]) + 6)
+          .attr("x", d => xScale(d[1]) + 4)
           .attr(
             "y",
             d =>
@@ -339,18 +365,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
         xAxisG
           .selectAll("text")
-          .attr("class", "axis-label");
+          .attr("fill", "#cbd5f5")
+          .attr("font-size", "10px");
         yAxisG
           .selectAll("text")
-          .attr("class", "axis-label");
+          .attr("fill", "#e5e7eb")
+          .attr("font-size", "11px");
         xAxisG
           .selectAll("path,line")
-          .attr("class", "axis-line");
+          .attr("stroke", "#4b5563");
         yAxisG
           .selectAll("path,line")
-          .attr("class", "axis-line");
+          .attr("stroke", "#4b5563");
 
-        // ----- 7d. Gender summary -----------------------------------
+        // --------------------------------------------------------
+        // Gender summary
+        // --------------------------------------------------------
         const genderCounts = d3
           .rollups(
             filtered,
@@ -374,7 +404,7 @@ document.addEventListener("DOMContentLoaded", () => {
         genderSummary.text(summaryText);
       }
 
-      // Initial render
+      // initial render
       updateAll();
     })
     .catch(err => {
