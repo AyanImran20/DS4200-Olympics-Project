@@ -96,49 +96,58 @@
     </section>
 
     <!-- Static visualizations -->
-    <section id="static-viz" class="section">
-      <h2>Static Visualizations</h2>
-      <p>
-        This section presents static charts created in Python (Altair/Matplotlib)
-        to provide an overview of Olympic medal trends.
+<section id="static-viz" class="section">
+  <h2>Static Visualizations</h2>
+  <p>
+    This section presents static charts created in Python (via the
+    <code>static_figures.ipynb</code> notebook) to provide an overview of key
+    Olympic medal trends.
+  </p>
+
+  <div class="viz-grid">
+    <!-- Visualization 1 -->
+    <article class="viz-card">
+      <h3>Medal Counts by Country Over Time</h3>
+      <p class="viz-desc">
+        Line chart showing how total medal counts for top countries change
+        across Olympic years.
       </p>
+      <img
+        class="viz-img"
+        src="figures/medals_by_country.png"
+        alt="Medal counts by country over time"
+      />
+    </article>
 
-      <div class="viz-grid">
-        <!-- Visualization 1 -->
-        <article class="viz-card">
-          <h3>Medal Counts by Country Over Time</h3>
-          <p class="viz-desc">
-            Line or area chart showing how total medal counts for top countries
-            change across Olympic years.
-          </p>
-          <div class="viz-placeholder">
-            Static plot coming soon (Mihir)
-          </div>
-        </article>
+    <!-- Visualization 2 -->
+    <article class="viz-card">
+      <h3>Gender Participation by Year</h3>
+      <p class="viz-desc">
+        Stacked bar chart summarizing male vs. female athlete counts over time.
+      </p>
+      <img
+        class="viz-img"
+        src="figures/gender_participation.png"
+        alt="Gender participation by year"
+      />
+    </article>
 
-        <!-- Visualization 2 -->
-        <article class="viz-card">
-          <h3>Gender Participation by Year</h3>
-          <p class="viz-desc">
-            Stacked bar chart summarizing male vs female athlete counts over time.
-          </p>
-          <div class="viz-placeholder">
-            Static gender plot coming soon (Mihir)
-          </div>
-        </article>
+    <!-- Visualization 3 -->
+    <article class="viz-card">
+      <h3>Sport / Event Medal Distribution</h3>
+      <p class="viz-desc">
+        Heatmap highlighting which sports and events accumulate the most medals
+        across Olympic years.
+      </p>
+      <img
+        class="viz-img"
+        src="figures/sport_event_heatmap.png"
+        alt="Sport and event medal distribution heatmap"
+      />
+    </article>
+  </div>
+</section>
 
-        <!-- Visualization 3 -->
-        <article class="viz-card">
-          <h3>Sport / Event Medal Distribution</h3>
-          <p class="viz-desc">
-            Heatmap highlighting which sports and events accumulate the most medals.
-          </p>
-          <div class="viz-placeholder">
-            Static heatmap coming soon (Mihir)
-          </div>
-        </article>
-      </div>
-    </section>
 
     <!-- Interactive visualizations -->
     <section id="interactive-viz" class="section">
