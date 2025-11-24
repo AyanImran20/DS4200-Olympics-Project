@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       console.log("Loaded olympics_clean.csv rows:", data.length);
-      console.log("First few rows:", data.slice(0, 5));
+      console.log("Sample row:", data[0]);
       console.log(
         "World features:",
         world.features ? world.features.length : "no features"
@@ -31,30 +31,52 @@ document.addEventListener("DOMContentLoaded", () => {
       const years = Array.from(new Set(data.map(d => d.Year))).sort(
         (a, b) => a - b
       );
-      let currentYear = years[years.length - 1]; // latest year in dataset
+      let currentYear = years[years.length - 1]; // latest year
+
+      // Helper: how many medals does one row represent?
+      function medalWeight(d) {
+        const tm =
+          d.Total_Medals ||
+          d.Medals ||
+          d.MedalCount ||
+          d.MedalCountTotal;
+        return tm ? +tm : 1; // fallback: each row = 1 medal
+      }
+
+      // Helper: normalize Olympic codes to ISO-3 used in world.geojson
+      function normalizedIso(d) {
+        const raw = (d.ISO_Code || d.NOC || d.Country || "").toUpperCase();
+
+        const overrides = {
+          URS: "RUS",
+          EUN: "RUS",
+          GDR: "DEU",
+          FRG: "DEU",
+          YUG: "SRB",
+          TCH: "CZE",
+          BOH: "CZE",
+          RUS: "RUS",
+          GER: "DEU"
+        };
+
+        return overrides[raw] || raw;
+      }
 
       // ---- 2. Controls (Year dropdown) -----------------------------------
       const mapContainer = d3.select("#world-map");
 
       const controls = mapContainer
         .insert("div", ":first-child")
-        .attr("class", "viz-controls")
-        .style("margin-bottom", "0.75rem");
+        .attr("class", "viz-controls");
 
       controls
         .append("label")
         .attr("for", "year-select")
-        .style("margin-right", "0.35rem")
         .text("Year:");
 
       const yearSelect = controls
         .append("select")
         .attr("id", "year-select")
-        .style("background", "#050814")
-        .style("color", "#f5f5f5")
-        .style("border", "1px solid rgba(255,255,255,0.26)")
-        .style("border-radius", "6px")
-        .style("padding", "0.18rem 0.5rem")
         .on("change", event => {
           const val = event.target.value;
           currentYear = val === "All" ? "All" : +val;
@@ -100,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .style("width", "100%")
         .style("height", "100%");
 
-      const barMargin = { top: 30, right: 20, bottom: 40, left: 140 };
+      const barMargin = { top: 40, right: 40, bottom: 40, left: 160 };
       const barInnerWidth = barWidth - barMargin.left - barMargin.right;
       const barInnerHeight = barHeight - barMargin.top - barMargin.bottom;
 
@@ -109,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .attr("transform", `translate(${barMargin.left},${barMargin.top})`);
 
       const xScale = d3.scaleLinear().range([0, barInnerWidth]);
-      const yScale = d3.scaleBand().range([0, barInnerHeight]).padding(0.15);
+      const yScale = d3.scaleBand().range([0, barInnerHeight]).padding(0.2);
 
       const xAxisG = barG
         .append("g")
@@ -121,18 +143,18 @@ document.addEventListener("DOMContentLoaded", () => {
       svgBar
         .append("text")
         .attr("x", barWidth / 2)
-        .attr("y", 18)
+        .attr("y", 24)
         .attr("text-anchor", "middle")
-        .attr("fill", "#f5f5f5")
-        .attr("font-size", "14px")
+        .attr("fill", "#e5e7eb")
+        .attr("font-size", "16px")
+        .attr("font-weight", "600")
         .text("Top Countries by Medal Count");
 
       // ---- 5. Gender summary block ---------------------------------------
       const genderContainer = d3.select("#gender-dashboard");
       const genderSummary = genderContainer
         .append("div")
-        .attr("class", "gender-summary")
-        .style("margin-top", "0.5rem");
+        .attr("class", "gender-summary");
 
       // ---- 6. Helper to get filtered data --------------------------------
       function computeFilteredData() {
@@ -146,50 +168,47 @@ document.addEventListener("DOMContentLoaded", () => {
       function updateAll() {
         const filtered = computeFilteredData();
 
-        // If there is no data for the selected year, show a "no data" state
+        // If there is no data for this year / range, show a friendly message
         if (!filtered.length) {
-          // Reset map colors
           mapG
             .selectAll("path.country")
             .transition()
             .duration(300)
             .attr("fill", "#050814");
 
-          // Clear bar chart
           barG.selectAll("rect.bar").remove();
           barG.selectAll("text.bar-label").remove();
           xAxisG.call(d3.axisBottom(xScale).ticks(0));
           yAxisG.call(d3.axisLeft(yScale).tickValues([]));
 
-          // Gender summary message
           genderSummary.text(
             currentYear === "All"
               ? "No data available in this dataset for the selected range."
               : `Year ${currentYear}: no data available in this dataset.`
           );
 
-          return; // stop here for this year
+          return;
         }
 
         // --- map aggregation: medals per ISO code (or NOC / Country fallback)
         const medalsByIso = d3.rollup(
           filtered,
-          v => v.length,
-          d => d.ISO_Code || d.NOC || d.Country
+          v => d3.sum(v, medalWeight),
+          d => normalizedIso(d)
         );
 
         const maxMedals = d3.max(Array.from(medalsByIso.values())) || 0;
 
         const color = d3
-          .scaleSqrt()
+          .scaleLinear()
           .domain([0, maxMedals || 1])
-          .range(["#dbeafe", "#1d4ed8"]); // light blue -> bright royal blue
+          .range(["#e5f0ff", "#1d4ed8"]);
 
         const countryPaths = mapG
           .selectAll("path.country")
           .data(
             countries,
-            d => d.properties && (d.properties.ISO_A3 || d.properties.name)
+            d => d.properties && (d.properties.ISO_A3 || d.id || d.properties.name)
           );
 
         countryPaths
@@ -197,16 +216,17 @@ document.addEventListener("DOMContentLoaded", () => {
           .append("path")
           .attr("class", "country")
           .attr("d", path)
-          .attr("stroke", "#0f172a")
+          .attr("stroke", "#d1d5db")
           .attr("stroke-width", 0.6)
+          .attr("fill", "#e5f0ff")
           .on("mouseover", function () {
             d3.select(this)
-              .attr("stroke", "#facc15")
-              .attr("stroke-width", 1.3);
+              .attr("stroke", "#111827")
+              .attr("stroke-width", 1.2);
           })
           .on("mouseout", function () {
             d3.select(this)
-              .attr("stroke", "#0f172a")
+              .attr("stroke", "#d1d5db")
               .attr("stroke-width", 0.6);
           })
           .merge(countryPaths)
@@ -227,13 +247,20 @@ document.addEventListener("DOMContentLoaded", () => {
         const medalsByCountry = d3
           .rollups(
             filtered,
-            v => v.length,
+            v => d3.sum(v, medalWeight),
             d => d.Country_Name || d.Country
           )
+          .filter(d => d[0]) // drop blank names
           .sort((a, b) => d3.descending(a[1], b[1]))
           .slice(0, 10);
 
-        xScale.domain([0, d3.max(medalsByCountry, d => d[1]) || 1]);
+        // quick sanity check in console
+        console.log(`Top countries for ${currentYear}:`, medalsByCountry);
+
+        xScale.domain([
+          0,
+          d3.max(medalsByCountry, d => d[1]) || 1
+        ]);
         yScale.domain(medalsByCountry.map(d => d[0]));
 
         const bars = barG
@@ -248,7 +275,9 @@ document.addEventListener("DOMContentLoaded", () => {
           .attr("y", d => yScale(d[0]))
           .attr("height", yScale.bandwidth())
           .attr("width", 0)
-          .attr("fill", "#38bdf8") // brighter cyan-blue
+          .attr("rx", 4)
+          .attr("ry", 4)
+          .attr("fill", "#38bdf8")
           .transition()
           .duration(600)
           .attr("width", d => xScale(d[1]));
@@ -270,11 +299,13 @@ document.addEventListener("DOMContentLoaded", () => {
           .enter()
           .append("text")
           .attr("class", "bar-label")
-          .attr("x", d => xScale(d[1]) + 4)
+          .attr("x", d => xScale(d[1]) + 6)
           .attr(
             "y",
             d =>
-              (yScale(d[0]) || 0) + yScale.bandwidth() / 2 + 4
+              (yScale(d[0]) || 0) +
+              yScale.bandwidth() / 2 +
+              4
           )
           .attr("fill", "#e5e7eb")
           .attr("font-size", "11px")
@@ -282,38 +313,50 @@ document.addEventListener("DOMContentLoaded", () => {
           .merge(labels)
           .transition()
           .duration(600)
-          .attr("x", d => xScale(d[1]) + 4)
+          .attr("x", d => xScale(d[1]) + 6)
           .attr(
             "y",
             d =>
-              (yScale(d[0]) || 0) + yScale.bandwidth() / 2 + 4
+              (yScale(d[0]) || 0) +
+              yScale.bandwidth() / 2 +
+              4
           )
           .text(d => d[1]);
 
         labels.exit().remove();
 
-        xAxisG.call(d3.axisBottom(xScale).ticks(5).tickSizeOuter(0));
-        yAxisG.call(d3.axisLeft(yScale).tickSizeOuter(0));
+        xAxisG.call(
+          d3.axisBottom(xScale).ticks(4).tickSizeOuter(0)
+        );
+        yAxisG.call(
+          d3.axisLeft(yScale).tickSizeOuter(0)
+        );
 
         xAxisG
           .selectAll("text")
-          .attr("fill", "#e5e7eb")
-          .attr("font-size", "11px");
+          .attr("fill", "#9ca3af")
+          .attr("font-size", "10px");
         yAxisG
           .selectAll("text")
           .attr("fill", "#e5e7eb")
-          .attr("font-size", "12px");
-        xAxisG.selectAll("path,line").attr("stroke", "#4b5563");
-        yAxisG.selectAll("path,line").attr("stroke", "#4b5563");
+          .attr("font-size", "11px");
+        xAxisG
+          .selectAll("path,line")
+          .attr("stroke", "#4b5563");
+        yAxisG
+          .selectAll("path,line")
+          .attr("stroke", "#4b5563");
 
         // --- gender summary ----------------------------------------------
         const genderCounts = d3
           .rollups(
             filtered,
-            v => v.length,
+            v => d3.sum(v, medalWeight),
             d => d.Gender || d.Sex
           )
-          .sort((a, b) => d3.descending(a[1], b[1]));
+          .sort((a, b) =>
+            d3.descending(a[1], b[1])
+          );
 
         const summaryText =
           (currentYear === "All"
