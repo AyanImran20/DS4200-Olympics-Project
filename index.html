@@ -213,107 +213,153 @@
 </article>
 
     <!-- Findings / Conclusion -->
-    <section id="findings" class="section">
-    <h2>Preliminary Findings & Future Work</h2>
+    <section id="findings" class="section findings-section">
+      <div class="section-header">
+        <h2>Preliminary Findings &amp; Future Work</h2>
+      </div>
 
-    <div class="insights-container">
+      <div class="findings-layout">
+        <!-- Left: intro paragraph -->
+        <div class="findings-intro">
+          <p>
+            As we complete the analysis, this section summarizes early insights from our static and
+            interactive visualizations: shifts in global medal dominance, changes in gender
+            representation, and how socio-economic factors may correlate with Olympic success.
+          </p>
+          <p>
+            These are preliminary observations based on the current summer Olympics dataset; they
+            will be refined as we finalize our analysis and explore additional variables.
+          </p>
+        </div>
 
-        <!-- Text intro -->
-        <div class="insights-text">
+        <!-- Right: three horizontal cards -->
+        <div class="findings-grid">
+          <!-- Finding 1 -->
+          <article class="finding-card">
+            <h3>1. Shifts in Global Medal Dominance</h3>
             <p>
-                As we complete the analysis, this section summarizes early insights from our static
-                and interactive visualizations: shifts in global medal dominance, changes in gender
-                representation, and how socio-economic factors may correlate with Olympic success.
+              Early Olympics were dominated by European nations such as
+              <strong>France</strong>, <strong>Great Britain</strong>, and
+              <strong>Germany</strong>. By the mid–late 20th century, the
+              <strong>United States</strong> and the <strong>Soviet Union</strong> became the
+              two primary global leaders in medal count. In recent decades,
+              <strong>China</strong> has risen sharply, especially after 2000, emerging as one of
+              the top medal-winning nations.
             </p>
+          </article>
+
+          <!-- Finding 2 -->
+          <article class="finding-card">
+            <h3>2. Growth in Women’s Participation</h3>
+            <p>
+              From the early 1900s to the present, the number of women athletes has increased
+              more than tenfold. Our gender participation charts show a steady upward trend
+              beginning in the 1970s, with near-parity in recent Games. This reflects broader
+              shifts in gender equity, expanded Olympic events for women, and policy changes that
+              increased access to competitive sport worldwide.
+            </p>
+          </article>
+
+          <!-- Finding 3 -->
+          <article class="finding-card">
+            <h3>3. Changing Popularity of Sports &amp; Events</h3>
+            <p>
+              The event-level heatmap indicates that some sports, such as <strong>Basketball</strong>
+              and <strong>Volleyball</strong>, have become more globally competitive over time.
+              Traditional team events like <strong>Football</strong>, <strong>Hockey</strong>, and
+              <strong>Water Polo</strong> show long-term continuity but with more countries earning
+              medals in the last 40 years, suggesting a gradual diffusion of high-performance
+              programs.
+            </p>
+          </article>
         </div>
+      </div>
 
-        <!-- Horizontal insight cards -->
-        <div class="insight-cards">
-            <div class="insight-card">
-                <h4>1. Shifts in Global Medal Dominance</h4>
-                <p>
-                    Early Olympics were dominated by European nations such as <b>France</b>,
-                    <b>Great Britain</b>, and <b>Germany</b>. By the mid–late 20th century, the
-                    <b>United States</b> and the <b>Soviet Union</b> became the two primary global 
-                    leaders. In recent decades, <b>China</b> has risen sharply, especially after 
-                    the 2000s.
-                </p>
-            </div>
+      <!-- Limitations + future work card -->
+      <div class="finding-card limitations-card">
+        <h3>Limitations &amp; Future Directions</h3>
+        <p>
+          Early Olympic Games (pre-1950s) have sparser records, and this project focuses only on
+          the Summer Olympics. We also aggregate medals at the country level, which hides
+          differences across regions, age groups, and socio-economic backgrounds.
+        </p>
+        <p>
+          In future work, we would like to (1) incorporate Winter Olympics, (2) bring in richer
+          demographic data (age, event specialization, region), and (3) connect medals to
+          socio-economic indicators such as GDP per capita, investment in sport, and
+          participation rates.
+        </p>
+      </div>
+    </section>
 
-            <div class="insight-card">
-                <h4>2. Growth in Women’s Participation</h4>
-                <p>
-                    From the early 1900s to today, the number of women athletes has increased
-                    more than tenfold. Participation grew especially after the 1970s, reflecting
-                    greater gender equity and expanded Olympic opportunities.
-                </p>
-            </div>
+    <!-- References -->
+    <section id="references" class="section references-section">
+      <div class="section-header">
+        <h2>References</h2>
+      </div>
 
-            <div class="insight-card">
-                <h4>3. Changing Popularity of Sports & Events</h4>
-                <p>
-                    Newer sports such as <b>Basketball</b> and <b>Volleyball</b> have become
-                    increasingly competitive worldwide. Traditional sports like <b>Hockey</b> and
-                    <b>Water Polo</b> remain consistent but show broader participation recently.
-                </p>
-            </div>
+      <div class="references-grid">
+        <div class="references-column">
+          <ul>
+            <li>
+              <strong>Olympic data / sports analytics paper:</strong><br />
+              <a
+                href="https://www.tandfonline.com/doi/full/10.1080/24733938.2024.2341837"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                “1896–2024 Olympic Medal Trends: socio-economic &amp; demographic influences”
+              </a>
+            </li>
+
+            <li>
+              <strong>Visualization / storytelling theory:</strong><br />
+              <a
+                href="https://faculty.cc.gatech.edu/~stasko/papers/infovis06.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                “Illuminating the Path of Information Visualization” – Stasko (InfoVis 2006)
+              </a>
+            </li>
+
+            <li>
+              <strong>Olympic visual blog:</strong><br />
+              <a
+                href="https://flourish.studio/blog/visualizing-olympics/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                “Visualizing the Olympics” – Flourish Studio
+              </a>
+            </li>
+
+            <li>
+              <strong>Dataset repository:</strong><br />
+              <a
+                href="https://gitlab.engr.illinois.edu/sharanb2/visualization-of-olympic-dataset/-/tree/master"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                “Visualization of Olympic Dataset” – GitLab repository
+              </a>
+            </li>
+
+            <li>
+              <strong>Project code repository (this site):</strong><br />
+              <a
+                href="https://github.com/AyanImran20/DS4200-Olympics-Project"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                DS4200 Olympics Visualization Site – GitHub
+              </a>
+            </li>
+          </ul>
         </div>
-    </div>
+      </div>
+    </section>
 
-    <!-- Limitations section -->
-    <h3>Limitations</h3>
-    <ul>
-        <li>Early Olympic Games (pre-1950s) have inconsistent data records.</li>
-        <li>Our dataset does not include Winter Olympics.</li>
-        <li>Medal counts do not capture context such as population, GDP, or politics.</li>
-    </ul>
-
-    <h3>Future Work</h3>
-    <ul>
-        <li>Integrate socio-economic data (population, GDP, HDI).</li>
-        <li>Add Winter Olympics for a full picture.</li>
-        <li>Explore individual-athlete analytics and career evolution.</li>
-    </ul>
-
-</section>
-
-
-<!-- References -->
-<section id="references" class="section">
-    <h2>References</h2>
-
-    <ul class="references-list">
-        <li><b>Olympic data / sports analytics paper:</b>
-            <a href="https://www.tandfonline.com/doi/full/10.1080/24733938.2024.2341837" target="_blank">
-                “1896–2024 Olympic Medal Trends: socio-economic & demographic influences”
-            </a>
-        </li>
-
-        <li><b>Visualization/storytelling theory:</b>
-            <a href="https://faculty.cc.gatech.edu/~stasko/papers/infovis06.pdf" target="_blank">
-                “Illuminating the Path of Information Visualization” — Stasko (InfoVis 2006)
-            </a>
-        </li>
-
-        <li><b>Olympic visual blog:</b>
-            <a href="https://flourish.studio/blog/visualizing-olympics/" target="_blank">
-                “Visualizing the Olympics” — Flourish Studio
-            </a>
-        </li>
-
-        <li><b>Dataset repository:</b>
-            <a href="https://gitlab.engr.illinois.edu/sharanb2/visualization-of-olympic-dataset/-/tree/master" target="_blank">
-                Visualization of Olympic Dataset — GitLab
-            </a>
-        </li>
-
-        <li><b>Project code repository:</b>
-            <a href="https://github.com/Ayanimran20/DS4200-Olympics-Project" target="_blank">
-                DS4200 Olympics Visualization Site — GitHub
-            </a>
-        </li>
-    </ul>
-</section>
 
   </main>
 
