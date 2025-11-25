@@ -229,3 +229,10 @@ body {
 nav a[href="#interactive-viz"].active {
   color: #facc15;
 }
+
+.viz-takeaway {
+  margin-top: 0.7rem;
+  color: #c4c8ff;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
