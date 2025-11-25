@@ -119,46 +119,6 @@ body {
  font-size: 0.95rem;
 }
 
-/* Findings layout */
-.findings-grid {
- display: grid;
- grid-template-columns: repeat(3, minmax(0, 1fr));
- gap: 1.5rem;
- margin-top: 1.5rem;
-}
-
-.finding-card {
- background: radial-gradient(circle at top left, #101729, #050814);
- border-radius: 18px;
- padding: 1.5rem 1.75rem;
- box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
- border: 1px solid rgba(148, 163, 255, 0.35);
-}
-
-.finding-card h3 {
- font-size: 1.05rem;
- margin-bottom: 0.75rem;
-}
-
-.finding-card p {
- font-size: 0.9rem;
- line-height: 1.5;
- color: #d4d7ff;
-}
-
-/* Make grid responsive on smaller screens */
-@media (max-width: 1024px) {
- .findings-grid {
-   grid-template-columns: repeat(2, minmax(0, 1fr));
- }
-}
-
-@media (max-width: 768px) {
- .findings-grid {
-   grid-template-columns: 1fr;
- }
-}
-
 /* Visualization grid */
 .viz-grid {
  display: grid;
