@@ -72,10 +72,11 @@
     <section id="data" class="section">
       <h2>Data Description</h2>
       <p>
-        Our primary dataset is <code>summer.csv</code> from the
-        <em>visualization-of-olympic-dataset</em> repository. Each row represents
-        a medal-winning athlete in the Summer Olympics, with attributes such as
-        year, city, sport, event, country (NOC), athlete name, and medal type.
+        Our combined dataset includes 35,000+ medal-winning athlete records covering the Summer Olympic Games from 1896 to the most recent edition. 
+        We merged three primary sources: the summer.csv, athlete dataset, the dictionary.csv country metadata (including GDP per capita and population),
+        and the ISO_Codes.csv country code lookup. After merging and cleaning, the final table has more than 10 features (including Year, City, Sport, Event, 
+        NOC/Country, Athlete Name, Medal Type, Gender, GDP per Capita, Population). This rich structure enables exploration of country performance, gender participation, 
+        sports/ events trends, and socio-economic correlates.
       </p>
       <p>
         We integrate this file with <code>Dictionary.csv</code> (country metadata,
@@ -95,56 +96,82 @@
       </div>
     </section>
 
-    <!-- Static visualizations -->
+    <!-- Static Visualizations -->
 <section id="static-viz" class="section">
   <h2>Static Visualizations</h2>
   <p>
-    This section presents static charts created in Python (via the
-    <code>static_figures.ipynb</code> notebook) to provide an overview of key
-    Olympic medal trends.
+    This section presents static charts created in Python (Altair/Matplotlib)
+    to provide an overview of Olympic medal trends.
   </p>
 
   <div class="viz-grid">
+
     <!-- Visualization 1 -->
     <article class="viz-card">
       <h3>Medal Counts by Country Over Time</h3>
       <p class="viz-desc">
-        Line chart showing how total medal counts for top countries change
-        across Olympic years.
+        Line chart showing how medal totals for major countries evolve across different Olympic years.
       </p>
-      <img
-        class="viz-img"
-        src="figures/medals_by_country.png"
+
+      <img 
+        src="figures/medals_by_country.png" 
+        class="viz-img" 
         alt="Medal counts by country over time"
       />
+
+      <p class="viz-takeaway">
+        This visualization shows how global dominance in the Olympics has shifted over time. 
+        The United States consistently leads total medal counts, while countries such as the Soviet Union 
+        and China emerge as strong competitors in specific eras. Major geopolitical events — including 
+        wars, boycotts, and national sports investments — strongly influence these trends.
+      </p>
     </article>
+
 
     <!-- Visualization 2 -->
     <article class="viz-card">
       <h3>Gender Participation by Year</h3>
       <p class="viz-desc">
-        Stacked bar chart summarizing male vs. female athlete counts over time.
+        Stacked bar chart summarizing male vs female athlete participation over Olympic history.
       </p>
-      <img
-        class="viz-img"
-        src="figures/gender_participation.png"
+
+      <img 
+        src="figures/gender_participation.png" 
+        class="viz-img" 
         alt="Gender participation by year"
       />
+
+      <p class="viz-takeaway">
+        Gender participation in the Olympics has risen dramatically over the last century. 
+        While early Games were almost exclusively male, the number of female athletes grew sharply 
+        after the 1970s. This reflects global gender equality movements and expanded Olympic policies 
+        that increased women's access to competitive events.
+      </p>
     </article>
+
 
     <!-- Visualization 3 -->
     <article class="viz-card">
       <h3>Sport / Event Medal Distribution</h3>
       <p class="viz-desc">
-        Heatmap highlighting which sports and events accumulate the most medals
-        across Olympic years.
+        Heatmap showing which sports and events produce the highest total number of medals.
       </p>
-      <img
-        class="viz-img"
-        src="figures/sport_event_heatmap.png"
-        alt="Sport and event medal distribution heatmap"
+
+      <img 
+        src="figures/sport_event_heatmap.png" 
+        class="viz-img" 
+        alt="Sport/event medal distribution heatmap"
       />
+
+      <p class="viz-takeaway">
+        The heatmap highlights how certain sports dominate Olympic medal counts. 
+        Athletics and swimming appear heavily saturated due to their many event categories, 
+        while sports with fewer events, such as weightlifting or fencing, show lighter activity. 
+        This explains why many countries invest strongly in multi-event sports to maximize their 
+        medal potential.
+      </p>
     </article>
+
   </div>
 </section>
 
@@ -274,13 +301,35 @@
 
     <!-- References -->
     <section id="references" class="section">
-      <h2>References</h2>
-      <ul class="references-list">
-        <li>Olympic data / sports analytics papers from our project proposal.</li>
-        <li>Visualization and storytelling references (e.g., InfoVis papers, Flourish blog).</li>
-        <li>Documentation used for D3, Altair, and dataset sources (GitHub repos, etc.).</li>
-      </ul>
-    </section>
+  <h2>References</h2>
+  <ul class="references-list">
+    <li>
+      <strong>Olympic data / sports analytics paper:</strong>  
+      <a href="https://www.tandfonline.com/doi/full/10.1080/24733938.2024.2341837#d1e520" target="_blank">
+        “1996–2024 Olympic Medal Trends: socio-economic &amp; demographic influences”
+      </a>
+    </li>
+    <li>
+      <strong>Visualization/storytelling theory:</strong>  
+      <a href="https://faculty.cc.gatech.edu/~stasko/papers/infovis06.pdf" target="_blank">
+        “Illuminating the Path of Information Visualization” – Stasko (InfoVis 2006)
+      </a>
+    </li>
+    <li>
+      <strong>Olympic visual blog:</strong>  
+      <a href="https://flourish.studio/blog/visualizing-olympics/" target="_blank">
+        “Visualizing the Olympics” blog — Flourish Studio
+      </a>
+    </li>
+    <li>
+      <strong>Dataset repository:</strong>  
+      <a href="https://gitlab.engr.illinois.edu/sharanb2/visualization-of-olympic-dataset/-/tree/master" target="_blank">
+        “Visualization of Olympic Dataset” – GitLab repository
+      </a>
+    </li>
+  </ul>
+</section>
+
 
   </main>
 
