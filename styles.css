@@ -1,278 +1,195 @@
-/* Global reset */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* ------------------------------------------------------
+   GLOBAL STYLES
+------------------------------------------------------ */
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background-color: #0b1020;
-  color: #f5f5f5;
-  line-height: 1.5;
+    font-family: "Inter", sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #0b0f1a;
+    color: white;
+    line-height: 1.6;
 }
 
-/* Header / Navigation */
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.75rem 2rem;
-  background: rgba(5, 8, 20, 0.96);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
+h1, h2, h3, h4 {
+    font-weight: 700;
+    margin-bottom: 10px;
 }
 
-.logo {
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-size: 0.9rem;
+a {
+    color: #7ab8ff;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
 }
 
-.logo-accent {
-  color: #ffd700;
+/* ------------------------------------------------------
+   NAVBAR
+------------------------------------------------------ */
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 40px;
+    background: #05070d;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.nav a {
-  margin-left: 1.25rem;
-  text-decoration: none;
-  font-size: 0.9rem;
-  color: #c4c8ff;
-  transition: color 0.2s ease, border-color 0.2s ease;
-  border-bottom: 2px solid transparent;
-  padding-bottom: 0.15rem;
+nav .logo {
+    font-size: 22px;
+    font-weight: 800;
+    color: #f1b100;
+    letter-spacing: 1px;
 }
 
-.nav a:hover {
-  color: #ffffff;
-  border-color: #ffd700;
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
 }
 
-/* Main Layout */
-.content {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 2rem 1.25rem 3rem;
+nav ul li a {
+    color: white;
+    font-weight: 500;
 }
 
-/* Sections */
+/* ------------------------------------------------------
+   SECTIONS GENERAL
+------------------------------------------------------ */
+
 .section {
-  margin-bottom: 3rem;
+    padding: 60px 10%;
 }
 
-.section h1,
-.section h2 {
-  margin-bottom: 0.75rem;
-}
-
-.section h1 {
-  font-size: 2rem;
-}
-
-.section h2 {
-  font-size: 1.5rem;
-  margin-top: 0.5rem;
-}
-
-.section-subtitle {
-  color: #c4c8ff;
-  max-width: 720px;
-  margin-bottom: 1.5rem;
-}
-
-/* Cards & grids */
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.25rem;
-}
-
-.card,
-.viz-card,
-.data-stats {
-  background: radial-gradient(circle at top left, #141b3b, #050814);
-  border-radius: 0.9rem;
-  padding: 1.2rem 1.4rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
-}
-
-.card h2,
-.viz-card h3,
-.data-stats h3 {
-  margin-bottom: 0.5rem;
-}
-
-.card ul,
-.data-stats ul {
-  padding-left: 1.1rem;
-  margin-top: 0.25rem;
-}
-
-.card li,
-.data-stats li {
-  margin-bottom: 0.35rem;
-  font-size: 0.95rem;
-}
-
-/* Findings layout */
-.findings-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-}
-
-.finding-card {
-  background: radial-gradient(circle at top left, #101729, #050814);
-  border-radius: 18px;
-  padding: 1.5rem 1.75rem;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
-  border: 1px solid rgba(148, 163, 255, 0.35);
-}
-
-.finding-card h3 {
-  font-size: 1.05rem;
-  margin-bottom: 0.75rem;
-}
-
-.finding-card p {
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: #d4d7ff;
-}
-
-/* Make grid responsive on smaller screens */
-@media (max-width: 1024px) {
-  .findings-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 768px) {
-  .findings-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Visualization grid */
 .viz-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
 }
 
-.viz-desc {
-  font-size: 0.9rem;
-  color: #c4c8ff;
-  margin-bottom: 0.75rem;
+.viz-card {
+    background: rgba(255, 255, 255, 0.06);
+    padding: 25px;
+    border-radius: 14px;
+    width: 30%;
 }
 
-/* Placeholder box (used for static + interactive sections) */
-.viz-placeholder {
-  height: 420px;          /* taller so charts are readable */
-  width: 100%;
-  border: 1px dashed rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  margin-top: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-size: 0.85rem;
-  color: #9ca3af;
-  background: radial-gradient(circle at top, #070c20 0, #02030a 65%, #000000 100%);
+.viz-card img {
+    width: 100%;
+    border-radius: 10px;
 }
 
-/* Static plot images */
-.viz-card img.viz-img {
-  width: 100%;
-  border-radius: 0.7rem;
-  margin-top: 1rem;
-  display: block;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+/* ------------------------------------------------------
+   INTERACTIVE DASHBOARD
+------------------------------------------------------ */
+
+#world-map-container,
+#bar-chart-container,
+#gender-explorer-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 25px;
+    flex: 1;
+    min-height: 520px;
+    border: 1px dashed rgba(255, 255, 255, 0.18);
 }
 
-/* References */
+.dashboard-grid {
+    display: flex;
+    gap: 25px;
+}
+
+/* Dropdown styling */
+select {
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 2px solid #2a4cff;
+    background: white;
+    color: black;
+    font-weight: 600;
+    outline: none;
+}
+
+/* ------------------------------------------------------
+   FINDINGS — HORIZONTAL INSIGHTS
+------------------------------------------------------ */
+
+.insights-container {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    margin-bottom: 40px;
+}
+
+/* Left intro text */
+.insights-text {
+    flex: 1.2;
+    max-width: 420px;
+}
+
+/* Horizontal card row */
+.insight-cards {
+    flex: 2;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Individual cards */
+.insight-card {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 20px;
+    border-radius: 14px;
+    width: 32%;
+    min-width: 230px;
+    line-height: 1.45;
+}
+
+.insight-card h4 {
+    margin-top: 0;
+}
+
+/* ------------------------------------------------------
+   REFERENCES SECTION
+------------------------------------------------------ */
+
 .references-list {
-  padding-left: 1.1rem;
+    margin-top: 20px;
 }
 
 .references-list li {
-  margin-bottom: 0.4rem;
-  font-size: 0.95rem;
+    margin-bottom: 10px;
+    line-height: 1.5;
 }
 
-/* Footer */
-.site-footer {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 1rem;
-  text-align: center;
-  font-size: 0.8rem;
-  color: #a0a4d2;
-  background: #050814;
-}
+/* ------------------------------------------------------
+   MOBILE RESPONSIVENESS
+------------------------------------------------------ */
 
-/* Responsive tweaks */
-@media (max-width: 720px) {
-  .site-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
+@media(max-width: 1100px) {
+    .viz-grid,
+    .dashboard-grid {
+        flex-direction: column;
+    }
 
-  .nav a {
-    margin-left: 0;
-    margin-right: 0.8rem;
-  }
+    .insights-container {
+        flex-direction: column;
+    }
 
-  .section h1 {
-    font-size: 1.6rem;
-  }
-}
+    .insight-cards {
+        flex-direction: column;
+    }
 
-/* --- Interactive dashboard polish --- */
+    .insight-card {
+        width: 100%;
+    }
 
-#interactive-viz .viz-placeholder {
-  /* Slightly lighter / glowy background just for interactive cards */
-  background: radial-gradient(circle at top, #151b3c 0, #050816 55%, #02030a 100%);
-  border-color: rgba(255, 255, 255, 0.18);
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
-}
-
-/* Give the SVGs some breathing room + depth */
-#world-map svg,
-#bar-race svg {
-  padding: 0.75rem;
-  box-sizing: border-box;
-  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.45));
-}
-
-/* Gender summary text inside the right-hand card */
-#gender-dashboard .gender-summary {
-  font-size: 0.95rem;
-  color: #e5e7ff;
-  line-height: 1.6;
-}
-
-/* Axis text across interactive charts */
-#interactive-viz .axis text {
-  fill: #e5e7eb;
-}
-
-/* Optional: make nav link for 'Interactive Dashboard' a bit stronger when active */
-nav a[href="#interactive-viz"].active {
-  color: #facc15;
-}
-
-.viz-takeaway {
-  margin-top: 0.7rem;
-  color: #c4c8ff;
-  font-size: 0.9rem;
-  line-height: 1.45;
+    nav ul {
+        display: none;
+    }
 }
