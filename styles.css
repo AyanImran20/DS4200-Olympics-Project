@@ -237,4 +237,27 @@ nav a[href="#interactive-viz"].active {
  line-height: 1.45;
 }
 
+/* Plotly iframe styling */
+.viz-iframe {
+  width: 100%;
+  height: 420px;           /* matches your static viz height */
+  border: none;
+  border-radius: 0.7rem;
+  background: #020617;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+}
 
+/* Make interactive dashboards use full width (one per row) */
+#interactive-viz .viz-grid {
+  grid-template-columns: minmax(0, 1fr);  /* 1 column full width */
+}
+
+/* Make the iframes taller so controls are visible */
+.viz-iframe {
+  width: 100%;
+  height: 550px;         /* was 420px */
+  border: none;
+  border-radius: 0.7rem;
+  background: #020617;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+}
