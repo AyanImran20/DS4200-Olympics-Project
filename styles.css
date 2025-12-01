@@ -261,3 +261,28 @@ nav a[href="#interactive-viz"].active {
   background: #020617;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
 }
+
+/* Make STATIC visualizations bigger (2 wide on large screens) */
+#static-viz .viz-grid {
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+}
+
+/* Make STATIC visualizations bigger */
+#static-viz .viz-grid {
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+}
+
+/* Click-to-expand image styling */
+.viz-img-link {
+  display: block;
+}
+
+.viz-img-link img.viz-img {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: zoom-in;
+}
+
+.viz-img-link:hover img.viz-img {
+  transform: scale(1.02);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+}
