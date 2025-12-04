@@ -237,6 +237,14 @@ nav a[href="#interactive-viz"].active {
  line-height: 1.45;
 }
 
+.viz-howto {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #d1d5ff;
+  line-height: 1.5;
+}
+
+
 /* Plotly iframe styling */
 .viz-iframe {
   width: 100%;

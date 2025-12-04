@@ -176,53 +176,108 @@
 
     <!-- Interactive visualizations (Plotly embeds) -->
     <section id="interactive-viz" class="section">
-      <h2>Interactive Dashboard</h2>
-      <p>
-        This section embeds interactive Plotly dashboards built in Python. Use the sliders and hover
-        interactions to explore medal patterns by country, sport, and gender over time.
+  <h2>Interactive Dashboard</h2>
+  <p>
+    This section embeds interactive Plotly dashboards built in Python. Use the sliders and hover
+    interactions to explore medal patterns by country, sport, and gender over time.
+  </p>
+
+  <div class="viz-grid">
+
+    <!-- ============================= -->
+    <!-- Interactive 1: World choropleth -->
+    <!-- ============================= -->
+    <article class="viz-card">
+      <h3>World Medal Map (All Years)</h3>
+      <p class="viz-desc">
+        Animated choropleth of total medals by country with a year slider.
       </p>
 
-      <div class="viz-grid">
-        <!-- Interactive 1: World choropleth -->
-        <article class="viz-card">
-          <h3>World Medal Map (All Years)</h3>
-          <p class="viz-desc">
-            Animated choropleth of total medals by country with a year slider.
-          </p>
-          <iframe
-            class="viz-iframe"
-            src="interactive/world_medals_choropleth.html"
-            title="World medals choropleth"
-          ></iframe>
-        </article>
+      <iframe
+        class="viz-iframe"
+        src="interactive/world_medals_choropleth.html"
+        title="World medals choropleth"
+      ></iframe>
 
-        <!-- Interactive 2: Sport & Gender -->
-        <article class="viz-card">
-          <h3>Medals by Sport and Gender</h3>
-          <p class="viz-desc">
-            Stacked bar chart (animated by year) showing how men’s and women’s medals compare across sports.
-          </p>
-          <iframe
-            class="viz-iframe"
-            src="interactive/sport_gender_medals_bar.html"
-            title="Sport and gender medals bar chart"
-          ></iframe>
-        </article>
+      <p class="viz-howto">
+        <strong>How to use this visualization:</strong>
+        Use the play button to animate medal totals across Olympic years, or drag the slider to explore 
+        specific Games. Hover over any country to view its exact medal count and compare regional trends 
+        across time.
+      </p>
 
-        <!-- Interactive 3: Sport–Year Heatmap -->
-        <article class="viz-card">
-          <h3>Medal Distribution Across Sports and Years</h3>
-          <p class="viz-desc">
-            Heatmap of medal counts by sport and Olympic year, highlighting which sports dominate in each era.
-          </p>
-          <iframe
-            class="viz-iframe"
-            src="interactive/sport_year_heatmap.html"
-            title="Sport-year medals heatmap"
-          ></iframe>
-        </article>
-      </div>
-    </section>
+      <p class="viz-takeaway">
+        <strong>Takeaway:</strong>
+        The map highlights how Olympic success has historically been concentrated among a few leading nations. 
+        Europe and North America dominate early decades, while the Soviet Union, Eastern Bloc countries, and 
+        later China significantly shift the global medal landscape. Recent years show a broader distribution 
+        of medals as more regions develop competitive sports programs.
+      </p>
+    </article>
+
+    <!-- ============================= -->
+    <!-- Interactive 2: Sport & Gender -->
+    <!-- ============================= -->
+    <article class="viz-card">
+      <h3>Medals by Sport and Gender</h3>
+      <p class="viz-desc">
+        Stacked bar chart (animated by year) comparing the number of medals won by men and women across sports.
+      </p>
+
+      <iframe
+        class="viz-iframe"
+        src="interactive/sport_gender_medals_bar.html"
+        title="Sport and gender medals bar chart"
+      ></iframe>
+
+      <p class="viz-howto">
+        <strong>How to use this visualization:</strong>
+        Adjust the year slider or press play to watch how sports evolve over time. 
+        Compare the height of the blue (Men) and red (Women) segments for each sport. 
+        Hover over a bar segment to view precise medal counts.
+      </p>
+
+      <p class="viz-takeaway">
+        <strong>Takeaway:</strong>
+        The visualization clearly shows women's increasing representation in Olympic sports. 
+        While early Games were almost exclusively male, women gradually gain medal share from the 
+        mid-20th century onward, especially in athletics, swimming, gymnastics, and team sports. 
+        The growth reflects expanding opportunities and a more gender-balanced Olympic program.
+      </p>
+    </article>
+
+    <!-- ============================= -->
+    <!-- Interactive 3: Heatmap -->
+    <!-- ============================= -->
+    <article class="viz-card">
+      <h3>Medal Distribution Across Sports and Years</h3>
+      <p class="viz-desc">
+        Heatmap showing the density of medals won by different sports across Olympic years.
+      </p>
+
+      <iframe
+        class="viz-iframe"
+        src="interactive/sport_year_heatmap.html"
+        title="Sport-year medals heatmap"
+      ></iframe>
+
+      <p class="viz-howto">
+        <strong>How to use this visualization:</strong>
+        Look horizontally to see how a single sport grows or declines over time, or vertically to examine 
+        which sports were prominent in a specific Olympic year. Hover over any square to view the exact medal count.
+      </p>
+
+      <p class="viz-takeaway">
+        <strong>Takeaway:</strong>
+        The heatmap reveals stable, long-term trends: sports like athletics, swimming, and gymnastics consistently 
+        generate large medal counts, while others appear only in certain eras or fluctuate with program changes. 
+        Darker squares indicate years where a sport dominated the medal table.
+      </p>
+    </article>
+
+  </div>
+</section>
+
 
     <!-- Findings / Conclusion -->
     <section id="findings" class="section">
