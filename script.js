@@ -1,6 +1,3 @@
-// Task 1: Load olympics_clean.csv + world.geojson + ISO_Codes.csv
-// and build an interactive map + bar chart + gender summary.
-
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Olympics visualization site loaded.");
 
