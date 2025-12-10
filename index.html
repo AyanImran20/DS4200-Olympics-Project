@@ -17,8 +17,7 @@
     <nav class="nav">
       <a href="#intro">Introduction</a>
       <a href="#data">Data</a>
-      <a href="#static-viz">Static Visualizations</a>
-      <a href="#interactive-viz">Interactive Dashboard</a>
+      <a href="#visualizations">Visualizations</a>
       <a href="#findings">Findings</a>
       <a href="#references">References</a>
     </nav>
@@ -93,188 +92,235 @@
       </div>
     </section>
 
-    <!-- Static Visualizations -->
-    <section id="static-viz" class="section">
-      <h2>Static Visualizations</h2>
-      <p>
-        This section presents static charts created in Python (Altair/Matplotlib)
-        to provide an overview of Olympic medal trends.
-      </p>
-
-      <div class="viz-grid">
-
-        <!-- Visualization 1 -->
-        <article class="viz-card">
-          <h3>Medal Counts by Country Over Time</h3>
-          <p class="viz-desc">
-            Line chart showing how medal totals for major countries evolve across different Olympic years.
-          </p>
-        <a href="figures/medals_by_country.png" target="_blank" class="viz-img-link"></a>          
-
-          <img 
-            src="figures/medals_by_country.png" 
-            class="viz-img" 
-            alt="Medal counts by country over time"
-          />
-
-          <p class="viz-takeaway">
-            This visualization shows how global dominance in the Olympics has shifted over time. 
-            The United States consistently leads total medal counts, while countries such as the Soviet Union 
-            and China emerge as strong competitors in specific eras. Major geopolitical events — including 
-            wars, boycotts, and national sports investments — strongly influence these trends.
-          </p>
-        </article>
-
-        <!-- Visualization 2 -->
-        <article class="viz-card">
-          <h3>Gender Participation by Year</h3>
-          <p class="viz-desc">
-            Stacked bar chart summarizing male vs female athlete participation over Olympic history.
-          </p>
-
-        <a href="figures/gender_participation.png" target="_blank" class="viz-img-link"></a>
-
-          <img 
-            src="figures/gender_participation.png" 
-            class="viz-img" 
-            alt="Gender participation by year"
-          />
-
-          <p class="viz-takeaway">
-            Gender participation in the Olympics has risen dramatically over the last century. 
-            While early Games were almost exclusively male, the number of female athletes grew sharply 
-            after the 1970s. This reflects global gender equality movements and expanded Olympic policies 
-            that increased women's access to competitive events.
-          </p>
-        </article>
-
-        <!-- Visualization 3 -->
-        <article class="viz-card">
-          <h3>Sport / Event Medal Distribution</h3>
-          <p class="viz-desc">
-            Heatmap showing which sports and events produce the highest total number of medals.
-          </p>
-         <a href="figures/sport_event_heatmap.png" target="_blank" class="viz-img-link"></a>
-
-          <img 
-            src="figures/sport_event_heatmap.png" 
-            class="viz-img" 
-            alt="Sport/event medal distribution heatmap"
-          />
-
-          <p class="viz-takeaway">
-            The heatmap highlights how certain sports dominate Olympic medal counts. 
-            Athletics and swimming appear heavily saturated due to their many event categories, 
-            while sports with fewer events, such as weightlifting or fencing, show lighter activity. 
-            This explains why many countries invest strongly in multi-event sports to maximize their 
-            medal potential.
-          </p>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- Interactive visualizations (Plotly embeds) -->
-    <section id="interactive-viz" class="section">
-  <h2>Interactive Dashboard</h2>
+    <section id="visualizations" class="section">
+  <h2>Visualizations</h2>
   <p>
-    This section embeds interactive Plotly dashboards built in Python. Use the sliders and hover
-    interactions to explore medal patterns by country, sport, and gender over time.
+    Our visualizations are organized by theme rather than by static/interactive type.
+    Each group combines complementary charts so that country-level, gender, and sport-based
+    trends can be compared side by side.
   </p>
 
-  <div class="viz-grid">
+  <!-- ===================================================== -->
+  <!-- Group 1: Country-Level Medal Trends (line + map)      -->
+  <!-- ===================================================== -->
+  <div class="viz-subsection">
+    <h3>Country-Level Medal Trends</h3>
+    <p class="subsection-desc">
+      These visualizations compare how different countries perform at the Olympics over time.
+    </p>
 
-    <!-- ============================= -->
-    <!-- Interactive 1: World choropleth -->
-    <!-- ============================= -->
-    <article class="viz-card">
-      <h3>World Medal Map (All Years)</h3>
+    <div class="viz-grid">
+      <!-- Static: Top 5 countries line chart -->
+      <article class="viz-card">
+        <h4>Medal Counts by Country Over Time</h4>
+        <p class="viz-desc">
+          Line chart showing how medal totals evolve across Olympic years for the top 5 countries.
+        </p>
+
+        <a href="figures/medals_by_country.png" target="_blank" class="viz-img-link">
+          <img
+            src="figures/medals_by_country.png"
+            class="viz-img"
+            alt="Medal counts by country over time"
+          />
+        </a>
+
+        <p class="viz-takeaway">
+          <strong>Takeaway:</strong>
+          This line chart shows that a small group of countries dominate Olympic medals. The United States
+          consistently leads, while nations such as the Soviet Union and later China rise sharply in specific
+          periods before stabilizing. Major geopolitical events (wars, boycotts, regime changes) often coincide
+          with sudden jumps or drops in medal counts.
+        </p>
+      </article>
+
+      <!-- Interactive: World medal map -->
+      <article class="viz-card">
+        <h4>World Medal Map (All Years)</h4>
+        <p class="viz-desc">
+          Animated choropleth map of total medals by country with a year slider.
+        </p>
+
+        <iframe
+          class="viz-iframe"
+          src="interactive/world_medals_choropleth.html"
+          title="World medals choropleth"
+        ></iframe>
+
+        <p class="viz-howto">
+          <strong>How to use this visualization:</strong>
+          Use the play button to animate medal totals across Olympic years or drag the slider to focus
+          on a specific Games. Hover over any country to view its exact medal count and directly compare
+          countries across the world map.
+        </p>
+
+        <p class="viz-takeaway">
+          <strong>Takeaway:</strong>
+          The map reinforces the line chart findings: Olympic success clusters in North America, Western Europe,
+          and a few powerful states like the Soviet Union and China. Over time, more countries begin to appear
+          on the map with non-zero medal counts, reflecting the globalization of elite sport.
+        </p>
+      </article>
+
+          <!-- Card 3: Brushing scatter by country -->
+    <div class="viz-card">
+      <h4>Country Medal Scatter (Brushing)</h4>
       <p class="viz-desc">
-        Animated choropleth of total medals by country with a year slider.
+        Interactive scatter plot where each point shows the number of medals a country
+        won in a given Olympic year. Use lasso selection to focus on specific countries or eras.
       </p>
 
       <iframe
         class="viz-iframe"
-        src="interactive/world_medals_choropleth.html"
-        title="World medals choropleth"
+        src="interactive/medals_country_scatter.html"
       ></iframe>
 
       <p class="viz-howto">
         <strong>How to use this visualization:</strong>
-        Use the play button to animate medal totals across Olympic years, or drag the slider to explore 
-        specific Games. Hover over any country to view its exact medal count and compare regional trends 
-        across time.
+        Use the lasso tool (top-right toolbar) to drag around clusters of points and
+        highlight specific countries or years. Selected points turn darker and larger,
+        while unselected points fade, making it easier to compare medal counts across
+        different regions and time periods.
       </p>
 
       <p class="viz-takeaway">
         <strong>Takeaway:</strong>
-        The map highlights how Olympic success has historically been concentrated among a few leading nations. 
-        Europe and North America dominate early decades, while the Soviet Union, Eastern Bloc countries, and 
-        later China significantly shift the global medal landscape. Recent years show a broader distribution 
-        of medals as more regions develop competitive sports programs.
+        This scatter plot shows how a small group of countries consistently appear at
+        the top of the medal distribution, while many others earn only a few medals in
+        occasional Games. The dense vertical bands for countries like the United States,
+        Soviet Union, and Germany highlight long-term dominance, whereas sparse points
+        reveal nations with more sporadic Olympic success.
       </p>
-    </article>
+    </div>
+    </div>
+  </div>
 
-    <!-- ============================= -->
-    <!-- Interactive 2: Sport & Gender -->
-    <!-- ============================= -->
-    <article class="viz-card">
-      <h3>Medals by Sport and Gender</h3>
-      <p class="viz-desc">
-        Stacked bar chart (animated by year) comparing the number of medals won by men and women across sports.
-      </p>
+  <!-- ===================================================== -->
+  <!-- Group 2: Gender & Sport Dynamics (gender + stacked bar) -->
+  <!-- ===================================================== -->
+  <div class="viz-subsection">
+    <h3>Gender Participation and Medals by Sport</h3>
+    <p class="subsection-desc">
+      These visualizations highlight how women’s participation and medal share have changed across sports.
+    </p>
 
-      <iframe
-        class="viz-iframe"
-        src="interactive/sport_gender_medals_bar.html"
-        title="Sport and gender medals bar chart"
-      ></iframe>
+    <div class="viz-grid">
+      <!-- Static: Gender participation stacked bar -->
+      <article class="viz-card">
+        <h4>Gender Participation by Year</h4>
+        <p class="viz-desc">
+          Stacked bar chart summarizing the number of male and female athletes at each Olympic Games.
+        </p>
 
-      <p class="viz-howto">
-        <strong>How to use this visualization:</strong>
-        Adjust the year slider or press play to watch how sports evolve over time. 
-        Compare the height of the blue (Men) and red (Women) segments for each sport. 
-        Hover over a bar segment to view precise medal counts.
-      </p>
+        <a href="figures/gender_participation.png" target="_blank" class="viz-img-link">
+          <img
+            src="figures/gender_participation.png"
+            class="viz-img"
+            alt="Gender participation in the Olympics by year"
+          />
+        </a>
 
-      <p class="viz-takeaway">
-        <strong>Takeaway:</strong>
-        The visualization clearly shows women's increasing representation in Olympic sports. 
-        While early Games were almost exclusively male, women gradually gain medal share from the 
-        mid-20th century onward, especially in athletics, swimming, gymnastics, and team sports. 
-        The growth reflects expanding opportunities and a more gender-balanced Olympic program.
-      </p>
-    </article>
+        <p class="viz-takeaway">
+          <strong>Takeaway:</strong>
+          Early Olympics were almost entirely male, but after the 1970s, women’s participation grows
+          rapidly. By the 2000s, women make up a large share of total athletes, reflecting both policy
+          changes at the IOC and broader global movements toward gender equality in sports.
+        </p>
+      </article>
 
-    <!-- ============================= -->
-    <!-- Interactive 3: Heatmap -->
-    <!-- ============================= -->
-    <article class="viz-card">
-      <h3>Medal Distribution Across Sports and Years</h3>
-      <p class="viz-desc">
-        Heatmap showing the density of medals won by different sports across Olympic years.
-      </p>
+      <!-- Interactive: Medals by sport and gender -->
+      <article class="viz-card">
+        <h4>Medals by Sport and Gender</h4>
+        <p class="viz-desc">
+          Animated stacked bar chart comparing the number of medals won by men and women across sports.
+        </p>
 
-      <iframe
-        class="viz-iframe"
-        src="interactive/sport_year_heatmap.html"
-        title="Sport-year medals heatmap"
-      ></iframe>
+        <iframe
+          class="viz-iframe"
+          src="interactive/sport_gender_medals_bar.html"
+          title="Sport and gender medals bar chart"
+        ></iframe>
 
-      <p class="viz-howto">
-        <strong>How to use this visualization:</strong>
-        Look horizontally to see how a single sport grows or declines over time, or vertically to examine 
-        which sports were prominent in a specific Olympic year. Hover over any square to view the exact medal count.
-      </p>
+        <p class="viz-howto">
+          <strong>How to use this visualization:</strong>
+          Use the year slider or play button to watch how the medal distribution changes over time.
+          For any given year, compare the blue (Men) and red (Women) segments in each bar to see
+          which sports are more balanced. Hover over a bar segment to see exact medal counts.
+        </p>
 
-      <p class="viz-takeaway">
-        <strong>Takeaway:</strong>
-        The heatmap reveals stable, long-term trends: sports like athletics, swimming, and gymnastics consistently 
-        generate large medal counts, while others appear only in certain eras or fluctuate with program changes. 
-        Darker squares indicate years where a sport dominated the medal table.
-      </p>
-    </article>
+        <p class="viz-takeaway">
+          <strong>Takeaway:</strong>
+          Women’s medal counts increase dramatically in later decades, particularly in athletics,
+          swimming, and team sports. While men still dominate in some traditional events, many sports
+          now show a much more equal split, confirming the trend seen in the participation chart.
+        </p>
+      </article>
+    </div>
+  </div>
 
+  <!-- ===================================================== -->
+  <!-- Group 3: Sport & Event Medal Distribution (heatmaps)  -->
+  <!-- ===================================================== -->
+  <div class="viz-subsection">
+    <h3>Sport and Event Medal Distribution</h3>
+    <p class="subsection-desc">
+      These visualizations explore which sports and events produce the most medals across Olympic history.
+    </p>
+
+    <div class="viz-grid">
+      <!-- Static: Event heatmap -->
+      <article class="viz-card">
+        <h4>Sport / Event Medal Distribution</h4>
+        <p class="viz-desc">
+          Heatmap showing the total number of medals awarded across major sports and events.
+        </p>
+
+        <a href="figures/sport_event_heatmap.png" target="_blank" class="viz-img-link">
+          <img
+            src="figures/sport_event_heatmap.png"
+            class="viz-img"
+            alt="Sport/event Olympic medal distribution heatmap"
+          />
+        </a>
+
+        <p class="viz-takeaway">
+          <strong>Takeaway:</strong>
+          Sports like athletics and aquatics stand out because they contain many medal events, leading
+          to dense, saturated blocks in the heatmap. In contrast, niche sports with fewer events appear
+          lighter, which helps explain why countries often invest heavily in multi-event sports to
+          maximize overall medal potential.
+        </p>
+      </article>
+
+      <!-- Interactive: Sport-year heatmap -->
+      <article class="viz-card">
+        <h4>Medal Distribution Across Sports and Years</h4>
+        <p class="viz-desc">
+          Interactive heatmap of medal counts by sport and Olympic year, emphasizing long-term trends.
+        </p>
+
+        <iframe
+          class="viz-iframe"
+          src="interactive/sport_year_heatmap.html"
+          title="Sport-year medals heatmap"
+        ></iframe>
+
+        <p class="viz-howto">
+          <strong>How to use this visualization:</strong>
+          Read across a row to see how a single sport changes over time, or down a column to examine
+          which sports dominate in a specific year. Hover over any cell to view the exact sport, year,
+          and medal count.
+        </p>
+
+        <p class="viz-takeaway">
+          <strong>Takeaway:</strong>
+          The sport-year heatmap shows that a few core sports consistently generate large numbers of
+          medals across many decades, while others appear only in certain eras or fluctuate as events
+          are added or removed. Darker cells highlight time periods when a sport was especially central
+          to the Olympic program.
+        </p>
+      </article>
+    </div>
   </div>
 </section>
 
